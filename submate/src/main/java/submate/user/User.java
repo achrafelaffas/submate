@@ -27,7 +27,8 @@ public class User implements UserDetails, Principal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String fullname;
+    private String firstname;
+    private String lastname;
     @Column(unique = true)
     private String email;
     private String password;
@@ -69,5 +70,9 @@ public class User implements UserDetails, Principal {
     @Override
     public String getName() {
         return email;
+    }
+
+    public String getFullName() {
+        return firstname + " " + lastname;
     }
 }
