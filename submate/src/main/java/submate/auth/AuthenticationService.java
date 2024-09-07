@@ -46,7 +46,8 @@ public class AuthenticationService {
         var user = User.builder()
                 .email(request.getEmail())
                 .password(encoder.encode(request.getPassword()))
-                .fullname(request.getFullname())
+                .firstname(request.getFirstname())
+                .lastname(request.getLastname())
                 .enabled(false)
                 .locked(false)
                 .roles(List.of(role))
@@ -60,7 +61,7 @@ public class AuthenticationService {
         var newToken = generateActivationToken(user);
         emailService.sendActivationEmail(
                 user.getEmail(),
-                user.getFullname(),
+                user.getFullName(),
                 ACTIVATION_EMAIL,
                 newToken,
                 activation_url,
@@ -118,7 +119,7 @@ public class AuthenticationService {
 
         var claims = new HashMap<String, Object>();
         var user = ((User) auth.getPrincipal());
-        claims.put("fullname", user.getFullname());
+        claims.put("fullname", user.getFullName());
 
         var jwtToken = jwtService.generateToken(claims, (User) auth.getPrincipal());
         return AuthenticationResponse.builder()
