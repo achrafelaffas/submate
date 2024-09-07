@@ -12,9 +12,12 @@ import lombok.Setter;
 @Getter
 @Setter
 public class RegistrationRequest {
-    @NotNull(message = "The full name is required")
-    @NotEmpty(message = "The full name is required")
-    private String fullname;
+    @NotNull(message = "The first name is required")
+    @NotEmpty(message = "The first name is required")
+    private String firstname;
+    @NotNull(message = "The last name is required")
+    @NotEmpty(message = "The last name is required")
+    private String lastname;
     @NotNull(message = "The email is required")
     @NotEmpty(message = "The email is required")
     @Email(message = "The email you provided is invalid")
