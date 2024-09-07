@@ -16,7 +16,8 @@ import io.swagger.v3.oas.annotations.servers.Server;
                         email = "achrafelaffas@gmail.com"
                 ),
                 description = "Open api documentation for submate api",
-                title = "Open api specification"
+                title = "Open api specification",
+                version = "1.0.0"
         ),
         servers = @Server(
                 description = "Local server",
