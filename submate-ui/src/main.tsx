@@ -1,18 +1,15 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Register from "./pages/auth/register/Register.tsx";
+import { RouterProvider } from "react-router-dom";
+import ThemeProvider from "./components/ThemeProvider.tsx";
 
-const router = createBrowserRouter([
-  {
-    path: "/register",
-    element: <Register />,
-  },
-]);
+import router from "./routes.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <ThemeProvider>
+      <RouterProvider router={router} />
+    </ThemeProvider>
   </StrictMode>
 );
