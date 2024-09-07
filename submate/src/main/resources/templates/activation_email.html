@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Activation Email</title>
+</head>
+<body>
+    <h1 th:text="'Dear ' + ${username} + ','"></h1>
+    <p>This is your activation code:
+        <b th:text="${confirmation_code}"></b>
+    </p>
+    <button role="link"><a th:href="${activation_url}">activate</a></button>
+</body>
+</html>
