@@ -1,0 +1,30 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/submate
+    username: postgres
+    password: 123
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+
+  mail:
+    host: sandbox.smtp.mailtrap.io
+    username: 30db7a6f48cd06
+    password: 64b58caa3ce5d4
+    port: 2525
+
+application:
+  security:
+    jwt:
+      secret: HELL23OHO719W3ARE3YO34UD3OI3NG278TH32SI3386GR2AET274AL4LGO34OD
+      expiration: 86400000
+    mailing:
+      activation-url: http://localhost:3000/activation
+
+server:
+  servlet:
+    context-path: /api/v1/
+
+springdoc:
+  default-produces-media-type: application/json
