@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reminder Email</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .email-container {
+            max-width: 600px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+            font-size: 24px;
+        }
+
+        p {
+            font-size: 16px;
+            color: #555;
+        }
+
+        .footer {
+            margin-top: 40px;
+            font-size: 12px;
+            color: #888;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="email-container">
+    <!--/*@thymesVar id="username" type=""*/-->
+    <!--/*@thymesVar id="plateform" type=""*/-->
+    <!--/*@thymesVar id="nextPaymentDate" type=""*/-->
+
+    <h1 th:text="'Dear ' + ${username} + ','"></h1>
+    <p>We are sending you this email to remind you before you next payment</p>
+    <p th:text="'Payment to ' + ${plateform}"></p>
+    <p th:text="'Next payement date' + ${nextPaymentDate}"></p>
+    <p>If you want to cancel your membership, please consider doing it before
+        <span th:text="${nextPaymentDate}"></span>
+    </p>
+    <div class="footer">
+        <p>Thank you for choosing us!</p>
+        <p>&copy; 2024 Submate. All rights reserved.</p>
+    </div>
+</div>
+</body>
+</html>
