@@ -1,0 +1,34 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/submate?createDatabaseIfNotExist=true
+    username: root
+    password: 1341
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+  mail:
+    host: smtp.gmail.com
+    username: achrafelaffas@gmail.com
+    password: wtdefknubzxkfsot
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    port: 587
+
+application:
+  security:
+    jwt:
+      secret: u9RVhvnHLCKjL3NvZZPpGT5tdw2fEmH4NcX1MhzkWlw=
+      expiration: 86400000
+
+server:
+  servlet:
+    context-path: /api/v1/
+
+springdoc:
+  default-produces-media-type: application/json
