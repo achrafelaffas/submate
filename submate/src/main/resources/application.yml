@@ -10,8 +10,8 @@ spring:
 
   mail:
     host: smtp.gmail.com
-    username: ***
-    password: ***
+    username: ${USERNAME}
+    password: ${PASSWORD}
     properties:
       mail:
         smtp:

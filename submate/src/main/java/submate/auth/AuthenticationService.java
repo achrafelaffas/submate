@@ -51,8 +51,10 @@ public class AuthenticationService {
                 .roles(List.of(role))
                 .build();
 
-        userRepository.save(user);
-        sendValidationEmail(user);
+        if (userRepository.findByEmail(user.getEmail()).isEmpty()) {
+            userRepository.save(user);
+            sendValidationEmail(user);
+        }
     }
 
     private void sendValidationEmail(User user) throws MessagingException {

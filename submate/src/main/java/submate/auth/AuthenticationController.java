@@ -15,11 +15,11 @@ public class AuthenticationController {
     private final AuthenticationService service;
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(
+    public ResponseEntity<Void> register(
             @RequestBody @Valid RegistrationRequest request
     ) throws MessagingException {
         service.register(request);
-        return ResponseEntity.accepted().build();
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/activate-account")
