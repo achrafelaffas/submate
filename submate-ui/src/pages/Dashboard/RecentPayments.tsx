@@ -4,6 +4,8 @@ import { columns } from "./payments/Columns";
 import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import MinimalDataTable from "@/components/MinimalDataTable";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 const RecentPayments = () => {
   const config = useAuth();
@@ -38,7 +40,21 @@ const RecentPayments = () => {
         </div>
       </CardHeader>
       <CardContent>
-        <MinimalDataTable columns={columns} data={payments} isloading={isloading} />
+        {payments.length < 1 && (
+          <div className="flex flex-col items-center justify-center w-full h-full gap-5">
+            <p>There's no data to show yet</p>
+            <Link to="/subscriptions/new">
+              <Button>Get Started</Button>
+            </Link>
+          </div>
+        )}
+        {payments.length > 0 && (
+          <MinimalDataTable
+            columns={columns}
+            data={payments}
+            isloading={isloading}
+          />
+        )}
       </CardContent>
     </Card>
   );

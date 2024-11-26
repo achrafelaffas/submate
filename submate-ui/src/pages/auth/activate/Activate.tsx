@@ -10,19 +10,23 @@ import {
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import Sucess from "./Sucess";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import Spinner from "@/components/ui/spinner";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSeparator,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
 
 const Token = z.object({
   token: z
@@ -32,6 +36,9 @@ const Token = z.object({
 });
 
 const Activate = () => {
+  const [searchParams] = useSearchParams();
+  const email = searchParams.get("email");
+
   const auth = new AuthenticationControllerApi();
   const form = useForm<z.infer<typeof Token>>({
     resolver: zodResolver(Token),
@@ -51,10 +58,10 @@ const Activate = () => {
   return (
     <div className="h-screen flex items-center justify-center">
       <Card className="w-full max-w-sm px-4">
-        <CardHeader className="text-center">
+        <CardHeader>
           <CardTitle className="text-2xl">Activate Your Account</CardTitle>
           <CardDescription>
-            Enter the code we sent to your email address
+            Enter the code we sent to your email address : {email}
           </CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4">
@@ -66,7 +73,7 @@ const Activate = () => {
               <Form {...form}>
                 <form
                   onSubmit={form.handleSubmit(onSubmit)}
-                  className="grid gap-4 w-full"
+                  className="w-full flex flex-col items-center gap-4"
                 >
                   <FormField
                     control={form.control}
@@ -75,7 +82,18 @@ const Activate = () => {
                       <FormItem>
                         <FormLabel>Activation code</FormLabel>
                         <FormControl>
-                          <Input type="number" {...field} />
+                          <InputOTP maxLength={6} {...field}>
+                            <InputOTPGroup>
+                              <InputOTPSlot index={0} />
+                              <InputOTPSlot index={1} />
+                              <InputOTPSeparator />
+                              <InputOTPSlot index={2} />
+                              <InputOTPSlot index={3} />
+                              <InputOTPSeparator />
+                              <InputOTPSlot index={4} />
+                              <InputOTPSlot index={5} />
+                            </InputOTPGroup>
+                          </InputOTP>
                         </FormControl>
                         <FormMessage />
                       </FormItem>

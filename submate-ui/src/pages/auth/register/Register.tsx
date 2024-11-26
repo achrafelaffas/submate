@@ -45,7 +45,10 @@ const Register = () => {
 
   const onSubmit = async (registrationRequest: RegistrationRequest) => {
     await auth.register(registrationRequest).then(
-      () => navigate("/activate"),
+      () =>
+        navigate(
+          `/activate?email=${encodeURIComponent(registrationRequest.email)}`
+        ),
       (error) => console.error(error)
     );
   };
@@ -110,7 +113,11 @@ const Register = () => {
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <Input {...field} placeholder="Password" />
+                      <Input
+                        {...field}
+                        placeholder="Password"
+                        type="password"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

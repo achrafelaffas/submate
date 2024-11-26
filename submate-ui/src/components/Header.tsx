@@ -63,16 +63,16 @@ export default function Header() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuLabel>My Account</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem
+              {/* <DropdownMenuLabel>My Account</DropdownMenuLabel> */}
+              {/* <DropdownMenuSeparator /> */}
+              {/* <DropdownMenuItem
                 onClick={() => {
                   navigate("/profile");
                   onOpenChange(false);
                 }}
               >
                 Settings
-              </DropdownMenuItem>
+              </DropdownMenuItem> */}
               <DropdownMenuItem onClick={() => logout()}>
                 Logout
               </DropdownMenuItem>
