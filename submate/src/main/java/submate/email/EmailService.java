@@ -7,12 +7,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.context.Context;
-import org.thymeleaf.spring6.SpringTemplateEngine;
 
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.springframework.mail.javamail.MimeMessageHelper.MULTIPART_MODE_MIXED;
@@ -22,13 +18,11 @@ import static org.springframework.mail.javamail.MimeMessageHelper.MULTIPART_MODE
 public class EmailService {
 
     private final JavaMailSender mailSender;
-    private final SpringTemplateEngine engine;
 
     @Async
     public void sendActivationEmail(
             String to,
             String username,
-            EmailTemplateName template,
             String confirmationCode,
             String subject
     ) throws MessagingException {
@@ -40,19 +34,17 @@ public class EmailService {
                 UTF_8.name()
         );
 
-        Map<String, Object> properties = new HashMap<>();
-        properties.put("username", username);
-        properties.put("confirmation_code", confirmationCode);
+        String htmlContent = String.format(
+                "<html><body><p>Hi, %s!</p><p>Thank you for signing up with submate.</p><p>Your confirmation code is: <strong>%s</strong></p></body></html>",
+                username, confirmationCode
+        );
 
-        Context context = new Context();
-        context.setVariables(properties);
 
         helper.setFrom("achrafelaffas@gmail.com");
         helper.setTo(to);
         helper.setSubject(subject);
 
-        String emailTemplate = engine.process(template.name(), context);
-        helper.setText(emailTemplate, true);
+        helper.setText(htmlContent, true);
 
         mailSender.send(mimeMessage);
     }
@@ -60,7 +52,6 @@ public class EmailService {
     public void SendRemindingEmail(
             String to,
             String username,
-            EmailTemplateName template,
             String plateform,
             LocalDate nextPaymentDate
     ) throws MessagingException {
@@ -70,19 +61,18 @@ public class EmailService {
                 MULTIPART_MODE_MIXED,
                 UTF_8.name()
         );
-        Map<String, Object> properties = new HashMap<>();
-        properties.put("username", username);
-        properties.put("plateform", plateform);
-        properties.put("nextPaymentDate", nextPaymentDate);
 
-        Context context = new Context();
-        context.setVariables(properties);
-        helper.setFrom("contact@submate.com");
+
+        helper.setFrom("achrafelaffas@gmail.com");
         helper.setTo(to);
         helper.setSubject("Payment reminder - Next " + plateform + " payment");
 
-        String emailTemplate = engine.process(template.name(), context);
-        helper.setText(emailTemplate, true);
+        String htmlContent = String.format(
+                "<html><body><p>Hi, %s!</p><p>This is a reminder for an upcoming payment.</p><p>Your next payment date for %s is  <strong>%s</strong></p></body></html>",
+                username, plateform, nextPaymentDate
+        );
+
+        helper.setText(htmlContent, true);
         mailSender.send(mimeMessage);
     }
 }

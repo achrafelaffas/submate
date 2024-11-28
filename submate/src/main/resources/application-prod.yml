@@ -19,6 +19,7 @@ spring:
           starttls:
             enable: true
     port: 587
+    protocol: smtp
 
 application:
   security:

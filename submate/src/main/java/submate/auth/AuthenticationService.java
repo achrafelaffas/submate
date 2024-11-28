@@ -11,7 +11,6 @@ import jakarta.mail.MessagingException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,8 +20,6 @@ import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
-
-import static submate.email.EmailTemplateName.*;
 
 @Service
 @RequiredArgsConstructor
@@ -62,7 +59,6 @@ public class AuthenticationService {
         emailService.sendActivationEmail(
                 user.getEmail(),
                 user.getFullName(),
-                ACTIVATION_EMAIL,
                 newToken,
                 "Activate your account"
         );

@@ -11,8 +11,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import static submate.email.EmailTemplateName.REMINDER_EMAIL;
-
 @Service
 @RequiredArgsConstructor
 public class ScheduledEmailService {
@@ -23,11 +21,11 @@ public class ScheduledEmailService {
     @Scheduled(cron = "0 0 0 * * *")
     public void SendScheduledEmailService() throws MessagingException {
         setEmails();
+
         for (ScheduledEmail se : scheduledEmails) {
             emailService.SendRemindingEmail(
                     se.getTo(),
                     se.getUsername(),
-                    REMINDER_EMAIL,
                     se.getPlateform(),
                     se.getNextPaymentDate()
             );

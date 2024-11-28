@@ -13,6 +13,13 @@ spring:
     username: 5ecd82289a66cc
     password: 513e9a950a8a9b
     port: 2525
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    protocol: smtp
 
 application:
   security:
