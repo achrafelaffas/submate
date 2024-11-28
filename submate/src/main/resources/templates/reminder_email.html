@@ -3,58 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reminder Email</title>
+    <title>Activate Your Account</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9f9f9;
             margin: 0;
             padding: 0;
+            line-height: 1.6;
         }
 
-        .email-container {
+        .email-wrapper {
             max-width: 600px;
-            margin: 40px auto;
+            margin: 0 auto;
             background-color: #ffffff;
-            padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            border: 1px solid #e0e0e0;
         }
 
-        h1 {
+        .email-body {
+            padding: 20px;
             color: #333;
-            font-size: 24px;
         }
 
-        p {
+        .email-body p {
             font-size: 16px;
-            color: #555;
+            margin: 15px 0;
         }
 
-        .footer {
-            margin-top: 40px;
+        .activation-code {
+            font-size: 40px;
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0;
+            display: block;
+        }
+
+        .email-footer {
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 15px;
             font-size: 12px;
             color: #888;
-            text-align: center;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .email-footer a {
+            text-decoration: none;
+        }
+
+        .email-footer a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
-<div class="email-container">
-    <!--/*@thymesVar id="username" type=""*/-->
-    <!--/*@thymesVar id="plateform" type=""*/-->
-    <!--/*@thymesVar id="nextPaymentDate" type=""*/-->
-
-    <h1 th:text="'Dear ' + ${username} + ','"></h1>
-    <p>We are sending you this email to remind you before you next payment</p>
-    <p th:text="'Payment to ' + ${plateform}"></p>
-    <p th:text="'Next payement date' + ${nextPaymentDate}"></p>
-    <p>If you want to cancel your membership, please consider doing it before
-        <span th:text="${nextPaymentDate}"></span>
-    </p>
-    <div class="footer">
-        <p>Thank you for choosing us!</p>
+<div class="email-wrapper">
+    <div class="email-body">
+        <p>Hi <strong th:text="${username}"></strong>,</p>
+        <p>We are sending you this email to remind you before you next <span th:text="${plateform}"></span> payment</p>
+        <p class="activation-code" th:text="'Payment date is ' + ${nextPaymentDate}"></p>
+        <p>If you want to cancel your membership, please consider doing it now.</p>
+    </div>
+    <div class="email-footer">
         <p>&copy; 2024 Submate. All rights reserved.</p>
+        <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
     </div>
 </div>
 </body>
