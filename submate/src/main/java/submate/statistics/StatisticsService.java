@@ -29,7 +29,7 @@ public class StatisticsService {
     public List<PaymentResponse> getRecentPayments(Authentication auth) {
         User user = (User) auth.getPrincipal();
         return paymentRepository.findBySubscriptionUserIdOrderByIdDesc(
-                user.getId(), PageRequest.of(0, 5)
+                user.getId(), PageRequest.of(0, 3)
         ).stream().map(paymentMapper::toPaymentResponse).toList();
     }
 
