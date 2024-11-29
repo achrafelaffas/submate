@@ -9,24 +9,29 @@ import RequireAuth from "@auth-kit/react-router/RequireAuth";
 import SubscriptionDetails from "./pages/Dashboard/Subscriptions/SubscriptionDetails";
 import NewSubscription from "./pages/Dashboard/Subscriptions/NewSubscription";
 import Profile from "./pages/Dashboard/Profile/Profile";
+import Landing from "./pages/Landing";
 
 const router = createBrowserRouter([
+  { path: "/", element: <Landing /> },
   { path: "/register", element: <Register /> },
   { path: "/activate", element: <Activate /> },
   { path: "/login", element: <Login /> },
   {
-    path: "/",
+    path: "/me",
     element: (
       <RequireAuth fallbackPath="/login">
         <Layout />
       </RequireAuth>
     ),
     children: [
-      { path: "/", element: <Dashboard /> },
-      { path: "/subscriptions", element: <Subscriptions /> },
-      { path: "/subscriptions/:id/details", element: <SubscriptionDetails /> },
-      { path: "/subscriptions/new", element: <NewSubscription /> },
-      { path: "/profile", element: <Profile /> },
+      { path: "/me", element: <Dashboard /> },
+      { path: "/me/subscriptions", element: <Subscriptions /> },
+      {
+        path: "/me/subscriptions/:id/details",
+        element: <SubscriptionDetails />,
+      },
+      { path: "/me/subscriptions/new", element: <NewSubscription /> },
+      { path: "/me/profile", element: <Profile /> },
     ],
   },
 ]);
