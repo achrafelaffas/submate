@@ -33,12 +33,12 @@ const TooltipDemo = ({
   return (
     <div
       className={cn(
-        "grid min-w-[8rem] items-start gap-1.5 rounded-lg border border-border/50 bg-background px-2.5 py-1.5 text-xs transition-all ease-in-out hover:-translate-y-0.5",
+        "grid min-w-[8rem] items-start gap-1.5 bg-background px-2.5 py-1.5 text-xs transition-all ease-in-out hover:-translate-y-0.5",
         className
       )}
     >
       {!nestLabel ? tooltipLabel : null}
-      <div className="grid grid-cols-2 gap-1.5">
+      <div className="flex flex-col gap-1.5">
         {payload.map((item, index) => {
           const indicatorColor = item.fill;
 

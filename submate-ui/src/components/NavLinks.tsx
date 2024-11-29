@@ -3,8 +3,8 @@ import MenuItem from "./MenuItem";
 const NavLinks = () => {
   return (
     <>
-      <MenuItem to="/">Dashboard</MenuItem>
-      <MenuItem to="/subscriptions">Subscriptions</MenuItem>
+      <MenuItem to="/me">Dashboard</MenuItem>
+      <MenuItem to="/me/subscriptions">Subscriptions</MenuItem>
     </>
   );
 };
