@@ -37,6 +37,6 @@ public class Subscription extends BaseEntity {
     @ManyToOne
     private User user;
 
-    @OneToMany(mappedBy = "subscription")
+    @OneToMany(mappedBy = "subscription", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Payment> payments;
 }
