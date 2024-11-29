@@ -1,13 +1,19 @@
 import { SubscriptionResponse, PaymentResponse } from "@/api";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { extractColors } from "extract-colors";
 import Spinner from "@/components/ui/spinner";
-import { Calendar, DollarSign, Group, RotateCcw } from "lucide-react";
+import {
+  Calendar,
+  DollarSign,
+  Group,
+  RotateCcw,
+} from "lucide-react";
 import PaymentHistory from "../payments/PaymentHistory";
 import { formatAmount } from "@/lib/utils";
 import useApi from "@/hooks/UseApi";
+import { Button } from "@/components/ui/button";
 
 const SubscriptionDetails = () => {
   const { id } = useParams();
@@ -17,6 +23,8 @@ const SubscriptionDetails = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [color, setColor] = useState("");
+
+  const navigate = useNavigate();
 
   const options = {
     pixels: 64000,
@@ -55,17 +63,31 @@ const SubscriptionDetails = () => {
     if (id) fecthSubscription(Number(id));
   }, []);
 
+  const deleteSubscription = () => {
+    api.subscriptionApi
+      .deleteSubscriptionById(Number(id))
+      .then(() => navigate("/me/subscriptions"))
+      .catch((e) => console.log(e));
+  };
+
   if (isLoading) return <Spinner />;
   if (error) return <p>{error}</p>;
 
   return (
     <div className="flex md:flex-row flex-col justify-between">
       <div className="md:w-1/3 w-full">
+        <Button
+          variant="link"
+          className="p-0 text-red-400"
+          onClick={deleteSubscription}
+        >
+          Delete
+        </Button>
         <div className="flex flex-row items-center w-full gap-4 mb-10">
           <div className="h-12 w-12 md:h-20 md:w-20">
             <img src={subscription.image} />
           </div>
-          <h1 className="text-3xl" style={{ color: color }}>
+          <h1 className="text-base lg:text-3xl" style={{ color: color }}>
             {subscription.plateform}
           </h1>
         </div>
@@ -77,26 +99,26 @@ const SubscriptionDetails = () => {
           <CardContent className="flex flex-col gap-2 text-sm p-0">
             <div className="flex items-center gap-2">
               <Calendar className="h-4 w-4" style={{ color: color }} />{" "}
-              <span className="font-bold hidden md:flex">Next payment</span>
+              <span className="font-bold hidden lg:flex">Next payment</span>
               {subscription.dueDate &&
                 new Date(subscription.dueDate).toDateString()}
             </div>
 
             <div className="flex items-center gap-2">
               <RotateCcw className="h-4 w-4" style={{ color: color }} />{" "}
-              <span className="font-bold hidden md:flex">Cycle</span>
+              <span className="font-bold hidden lg:flex">Cycle</span>
               <span>{subscription.billing}</span>
             </div>
 
             <div className="flex items-center gap-2">
               <Group className="h-4 w-4" style={{ color: color }} />{" "}
-              <span className="font-bold hidden md:flex">Category</span>
+              <span className="font-bold hidden lg:flex">Category</span>
               {subscription.category?.name}
             </div>
 
             <div className="flex items-center gap-2">
               <DollarSign className="h-4 w-4" style={{ color: color }} />{" "}
-              <span className="font-bold hidden md:flex">Price</span>
+              <span className="font-bold hidden lg:flex">Price</span>
               {subscription.price && formatAmount(subscription.price)}
             </div>
           </CardContent>

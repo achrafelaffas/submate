@@ -21,8 +21,8 @@ const ConfirmationDialog = ({
   action: () => void;
   title: string;
   description: string;
-  open: boolean;
-  isOpen: (open: boolean) => void;
+  open?: boolean;
+  isOpen?: (open: boolean) => void;
 }) => {
   return (
     <AlertDialog open={open} onOpenChange={isOpen}>

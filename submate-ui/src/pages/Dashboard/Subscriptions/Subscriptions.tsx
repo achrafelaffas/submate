@@ -34,9 +34,19 @@ const Subscriptions = () => {
     fecthSubscriptions();
   }, []);
 
-  if (error) return <p>{error}</p>;
+  if (error)
+    return (
+      <div className="h-[75vh] w-full flex justify-center items-center">
+        <p>{error}</p>
+      </div>
+    );
 
-  if (isLoading) return <Spinner />;
+  if (isLoading)
+    return (
+      <div className="h-[75vh] w-full flex justify-center items-center">
+        <Spinner />
+      </div>
+    );
 
   return (
     <>
@@ -44,7 +54,7 @@ const Subscriptions = () => {
         <h1 className="text-xl">My Subscriptions</h1>
         <Link to={`/me/subscriptions/new`}>
           <Button>
-            <PlusIcon /> Add New
+            <PlusIcon /> <span className="hidden md:inline">Add New</span>
           </Button>
         </Link>
       </div>
