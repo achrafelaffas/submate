@@ -6,7 +6,7 @@ const Dashboard = () => {
   return (
     <div>
       <div className="flex flex-row mb-3 gap-4">
-        <SubscriptionStatsCard className="w-1/4" />
+        <SubscriptionStatsCard className="md:w-1/4 w-full" />
       </div>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-1 lg:grid-cols-2">

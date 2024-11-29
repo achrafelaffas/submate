@@ -10,7 +10,6 @@ import { Input } from "@/components/ui/input";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { RegistrationRequest } from "@/api";
-import { AuthenticationControllerApi } from "@/api";
 import Spinner from "@/components/ui/spinner";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -22,6 +21,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import useApi from "@/hooks/UseApi";
 
 const RegisterRequestSchema = z.object({
   firstname: z.string().min(3, { message: "First name is required" }),
@@ -31,7 +31,7 @@ const RegisterRequestSchema = z.object({
 });
 
 const Register = () => {
-  const auth = new AuthenticationControllerApi();
+  const api = useApi();
   const navigate = useNavigate();
   const form = useForm<RegistrationRequest>({
     resolver: zodResolver(RegisterRequestSchema),
@@ -44,7 +44,7 @@ const Register = () => {
   });
 
   const onSubmit = async (registrationRequest: RegistrationRequest) => {
-    await auth.register(registrationRequest).then(
+    await api.authApi.register(registrationRequest).then(
       () =>
         navigate(
           `/activate?email=${encodeURIComponent(registrationRequest.email)}`

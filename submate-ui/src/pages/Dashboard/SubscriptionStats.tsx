@@ -1,17 +1,16 @@
 import { cn } from "@/lib/utils";
 import { TrendingUp } from "lucide-react";
-import useAuth from "@/hooks/useAuth";
-import { StatisticsApi, SubscriptionStats } from "@/api";
+import { SubscriptionStats } from "@/api";
 import { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
+import useApi from "@/hooks/UseApi";
 
 const SubscriptionStatsCard = ({ className }: { className?: string }) => {
-  const config = useAuth();
-  const statisticsApi = new StatisticsApi(config);
+  const api = useApi();
   const [stats, setStats] = useState<SubscriptionStats>();
 
   const fecthData = async () => {
-    await statisticsApi.getSubscriptionStats().then(
+    await api.statisticsApi.getSubscriptionStats().then(
       (response) => setStats(response.data),
       (error) => console.log(error)
     );
@@ -22,7 +21,7 @@ const SubscriptionStatsCard = ({ className }: { className?: string }) => {
   }, []);
 
   return (
-    <Card className={cn("border py-3 px-5", className)}>
+    <Card className={cn("border py-3 px-5 w-full", className)}>
       <h1 className="text-lg ">Subscriptions</h1>
       <div className="flex flex-row justify-between items-center">
         <h1 className="text-3xl">{stats?.count}</h1>

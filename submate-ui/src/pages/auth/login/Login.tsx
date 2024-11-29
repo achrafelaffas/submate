@@ -19,11 +19,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import z from "zod";
-import { AuthenticationControllerApi } from "@/api";
 import Spinner from "@/components/ui/spinner";
 import useSignIn from "react-auth-kit/hooks/useSignIn";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import useApi from "@/hooks/UseApi";
 
 const AuthRequestSchema = z.object({
   email: z.string().email({ message: "Invalid email" }),
@@ -33,7 +33,7 @@ const AuthRequestSchema = z.object({
 const Login = () => {
   const navigate = useNavigate();
   const signIn = useSignIn();
-  const auth = new AuthenticationControllerApi();
+  const api = useApi();
   const form = useForm<z.infer<typeof AuthRequestSchema>>({
     resolver: zodResolver(AuthRequestSchema),
     defaultValues: {
@@ -44,7 +44,7 @@ const Login = () => {
   const [error, setError] = useState("");
 
   const onSubmit = async (authRequest: z.infer<typeof AuthRequestSchema>) => {
-    await auth.authenticate(authRequest).then(
+    await api.authApi.authenticate(authRequest).then(
       (response) => {
         const authenticationResponse = response.data;
         const token = authenticationResponse.token
@@ -57,7 +57,7 @@ const Login = () => {
           },
           userState: { id: authenticationResponse.id },
         });
-        navigate("/");
+        navigate("/me");
       },
       () => setError("Your email or password is incorrect")
     );

@@ -1,7 +1,7 @@
-import { UserApi, UserResponse } from "@/api";
+import { UserResponse } from "@/api";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import useAuth from "@/hooks/useAuth";
+import useApi from "@/hooks/UseApi";
 import { Edit3 } from "lucide-react";
 import { useEffect, useState } from "react";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
@@ -12,12 +12,11 @@ interface User {
 
 const Profile = () => {
   const userData = useAuthUser<User>();
-  const config = useAuth();
-  const userApi = new UserApi(config);
+  const api = useApi();
   const [user, setUser] = useState<UserResponse>({});
 
   const fecthUser = async (id: number) => {
-    await userApi.getUser(id).then(
+    await api.userApi.getUser(id).then(
       (response) => setUser(response.data),
       (error) => console.log(error)
     );

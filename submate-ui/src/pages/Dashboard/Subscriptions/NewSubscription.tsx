@@ -1,9 +1,7 @@
 import {
   SubscriptionRequest,
   SubscriptionRequestBillingEnum as Billing,
-  CategoryApi,
   CategoryDTO,
-  SubscriptionApi,
 } from "@/api";
 
 import Autocomplete, { TAutocomplete } from "@/components/Autocomplete";
@@ -26,7 +24,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import useAuth from "@/hooks/useAuth";
+import useApi from "@/hooks/UseApi";
 import { subscriptionRequestSchema } from "@/Validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
@@ -34,10 +32,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 const NewSubscription = () => {
-  
-  const config = useAuth();
-  const categoryApi = new CategoryApi(config);
-  const subscriptionApi = new SubscriptionApi(config);
+  const api = useApi();
   const [categories, setCategories] = useState<CategoryDTO[]>([]);
   const navigate = useNavigate();
 
@@ -50,21 +45,21 @@ const NewSubscription = () => {
       billing: "MONTHLY",
     },
   });
-  
+
   const handleClick = ({ query }: TAutocomplete) => {
     form.setValue("plateform", query?.name!);
     form.setValue("image", query?.icon!);
   };
-  
+
   const submit = async (request: SubscriptionRequest) => {
-    await subscriptionApi.createSubscription(request).then(
+    await api.subscriptionApi.createSubscription(request).then(
       () => navigate("/subscriptions", { replace: true }),
       (e) => console.log(e)
     );
   };
-  
+
   const getCategories = async () => {
-    await categoryApi.getAllCategories().then(
+    await api.categoryApi.getAllCategories().then(
       (response) => setCategories(response.data),
       (error) => console.log(error)
     );

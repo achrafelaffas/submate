@@ -1,6 +1,5 @@
-import { SubscriptionApi, SubscriptionResponse, PaymentResponse } from "@/api";
+import { SubscriptionResponse, PaymentResponse } from "@/api";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import useAuth from "@/hooks/useAuth";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { extractColors } from "extract-colors";
@@ -8,11 +7,11 @@ import Spinner from "@/components/ui/spinner";
 import { Calendar, DollarSign, Group, RotateCcw } from "lucide-react";
 import PaymentHistory from "../payments/PaymentHistory";
 import { formatAmount } from "@/lib/utils";
+import useApi from "@/hooks/UseApi";
 
 const SubscriptionDetails = () => {
   const { id } = useParams();
-  const config = useAuth();
-  const api = new SubscriptionApi(config);
+  const api = useApi();
   const [subscription, setSubscription] = useState<SubscriptionResponse>({});
   const [payments, setPayments] = useState<PaymentResponse[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -29,7 +28,7 @@ const SubscriptionDetails = () => {
 
   const fecthSubscription = async (id: number) => {
     setIsLoading(true);
-    await api.getSubscriptionById(id).then(
+    await api.subscriptionApi.getSubscriptionById(id).then(
       (response) => {
         const data = response.data;
         setSubscription(data);

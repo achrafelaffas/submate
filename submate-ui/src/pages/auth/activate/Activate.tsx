@@ -1,4 +1,3 @@
-import { AuthenticationControllerApi } from "@/api";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -27,6 +26,7 @@ import {
   InputOTPSeparator,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
+import useApi from "@/hooks/UseApi";
 
 const Token = z.object({
   token: z
@@ -38,8 +38,7 @@ const Token = z.object({
 const Activate = () => {
   const [searchParams] = useSearchParams();
   const email = searchParams.get("email");
-
-  const auth = new AuthenticationControllerApi();
+  const api = useApi();
   const form = useForm<z.infer<typeof Token>>({
     resolver: zodResolver(Token),
     defaultValues: {
@@ -49,10 +48,9 @@ const Activate = () => {
 
   const onSubmit = async (token: z.infer<typeof Token>) => {
     console.log(token);
-    await auth.activate(token.token.toString()).then(
-      () => console.log("activated"),
-      () => console.log("eroor")
-    );
+    await api.authApi
+      .activate(token.token.toString())
+      .catch((e) => console.log(e));
   };
 
   return (
