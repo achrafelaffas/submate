@@ -346,10 +346,10 @@ export interface UserResponse {
 }
 
 /**
- * AuthenticationControllerApi - axios parameter creator
+ * AuthenticationApi - axios parameter creator
  * @export
  */
-export const AuthenticationControllerApiAxiosParamCreator = function (configuration?: Configuration) {
+export const AuthenticationApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
          * 
@@ -473,11 +473,11 @@ export const AuthenticationControllerApiAxiosParamCreator = function (configurat
 };
 
 /**
- * AuthenticationControllerApi - functional programming interface
+ * AuthenticationApi - functional programming interface
  * @export
  */
-export const AuthenticationControllerApiFp = function(configuration?: Configuration) {
-    const localVarAxiosParamCreator = AuthenticationControllerApiAxiosParamCreator(configuration)
+export const AuthenticationApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = AuthenticationApiAxiosParamCreator(configuration)
     return {
         /**
          * 
@@ -488,7 +488,7 @@ export const AuthenticationControllerApiFp = function(configuration?: Configurat
         async activate(token: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.activate(token, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AuthenticationControllerApi.activate']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AuthenticationApi.activate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -500,7 +500,7 @@ export const AuthenticationControllerApiFp = function(configuration?: Configurat
         async authenticate(authenticationRequest: AuthenticationRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthenticationResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.authenticate(authenticationRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AuthenticationControllerApi.authenticate']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AuthenticationApi.authenticate']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -509,21 +509,21 @@ export const AuthenticationControllerApiFp = function(configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async register(registrationRequest: RegistrationRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+        async register(registrationRequest: RegistrationRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.register(registrationRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AuthenticationControllerApi.register']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AuthenticationApi.register']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
 };
 
 /**
- * AuthenticationControllerApi - factory interface
+ * AuthenticationApi - factory interface
  * @export
  */
-export const AuthenticationControllerApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
-    const localVarFp = AuthenticationControllerApiFp(configuration)
+export const AuthenticationApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = AuthenticationApiFp(configuration)
     return {
         /**
          * 
@@ -549,28 +549,28 @@ export const AuthenticationControllerApiFactory = function (configuration?: Conf
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        register(registrationRequest: RegistrationRequest, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+        register(registrationRequest: RegistrationRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.register(registrationRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * AuthenticationControllerApi - object-oriented interface
+ * AuthenticationApi - object-oriented interface
  * @export
- * @class AuthenticationControllerApi
+ * @class AuthenticationApi
  * @extends {BaseAPI}
  */
-export class AuthenticationControllerApi extends BaseAPI {
+export class AuthenticationApi extends BaseAPI {
     /**
      * 
      * @param {string} token 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AuthenticationControllerApi
+     * @memberof AuthenticationApi
      */
     public activate(token: string, options?: RawAxiosRequestConfig) {
-        return AuthenticationControllerApiFp(this.configuration).activate(token, options).then((request) => request(this.axios, this.basePath));
+        return AuthenticationApiFp(this.configuration).activate(token, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -578,10 +578,10 @@ export class AuthenticationControllerApi extends BaseAPI {
      * @param {AuthenticationRequest} authenticationRequest 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AuthenticationControllerApi
+     * @memberof AuthenticationApi
      */
     public authenticate(authenticationRequest: AuthenticationRequest, options?: RawAxiosRequestConfig) {
-        return AuthenticationControllerApiFp(this.configuration).authenticate(authenticationRequest, options).then((request) => request(this.axios, this.basePath));
+        return AuthenticationApiFp(this.configuration).authenticate(authenticationRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -589,10 +589,10 @@ export class AuthenticationControllerApi extends BaseAPI {
      * @param {RegistrationRequest} registrationRequest 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AuthenticationControllerApi
+     * @memberof AuthenticationApi
      */
     public register(registrationRequest: RegistrationRequest, options?: RawAxiosRequestConfig) {
-        return AuthenticationControllerApiFp(this.configuration).register(registrationRequest, options).then((request) => request(this.axios, this.basePath));
+        return AuthenticationApiFp(this.configuration).register(registrationRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
