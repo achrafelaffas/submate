@@ -53,7 +53,7 @@ const NewSubscription = () => {
 
   const submit = async (request: SubscriptionRequest) => {
     await api.subscriptionApi.createSubscription(request).then(
-      () => navigate("/subscriptions", { replace: true }),
+      () => navigate("/me/subscriptions", { replace: true }),
       (e) => console.log(e)
     );
   };
