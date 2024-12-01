@@ -4,12 +4,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { extractColors } from "extract-colors";
 import Spinner from "@/components/ui/spinner";
-import {
-  Calendar,
-  DollarSign,
-  Group,
-  RotateCcw,
-} from "lucide-react";
+import { Calendar, DollarSign, Group, RotateCcw } from "lucide-react";
 import PaymentHistory from "../payments/PaymentHistory";
 import { formatAmount } from "@/lib/utils";
 import useApi from "@/hooks/UseApi";
@@ -76,13 +71,6 @@ const SubscriptionDetails = () => {
   return (
     <div className="flex md:flex-row flex-col justify-between">
       <div className="md:w-1/3 w-full">
-        <Button
-          variant="link"
-          className="p-0 text-red-400"
-          onClick={deleteSubscription}
-        >
-          Delete
-        </Button>
         <div className="flex flex-row items-center w-full gap-4 mb-10">
           <div className="h-12 w-12 md:h-20 md:w-20">
             <img src={subscription.image} />
@@ -91,7 +79,7 @@ const SubscriptionDetails = () => {
             {subscription.plateform}
           </h1>
         </div>
-        <Card>
+        <Card className="bg-transparent">
           <CardHeader className="p-0">
             <CardTitle className="font-normal mb-5">Informtaion</CardTitle>
           </CardHeader>
@@ -120,6 +108,20 @@ const SubscriptionDetails = () => {
               <DollarSign className="h-4 w-4" style={{ color: color }} />{" "}
               <span className="font-bold hidden lg:flex">Price</span>
               {subscription.price && formatAmount(subscription.price)}
+            </div>
+
+            <div className="flex flex-row gap-3">
+              <Button
+                variant="link"
+                style={{ color: color }}
+                size="icon"
+                onClick={deleteSubscription}
+              >
+                Delete
+              </Button>
+              <Button variant="link" style={{ color: color }} size="icon">
+                Edit
+              </Button>
             </div>
           </CardContent>
         </Card>

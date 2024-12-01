@@ -73,7 +73,7 @@ const Autocomplete = ({ onSubmit, placeholder }: IAutocomplete) => {
           <CommandGroup heading="Suggestions">
             {queries.map((query, i) => (
               <div key={i} onClick={() => handleClick(query)}>
-                <CommandItem value={query.name}>
+                <CommandItem value={query.name || "None"}>
                   <img src={query.icon} className="mr-2 h-8 w-8" />
                   <span className="text-lg">{query.name}</span>
                 </CommandItem>

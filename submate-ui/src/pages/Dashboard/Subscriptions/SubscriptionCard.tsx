@@ -9,7 +9,7 @@ interface SubscriptionCardProps {
 const SubscriptionCard = ({ subscription }: SubscriptionCardProps) => {
   return (
     <Link to={`/me/subscriptions/${subscription.id}/details`}>
-      <Card className="flex flex-col gap-1 items-center justify-center p-4">
+      <Card className="flex flex-col gap-1 items-center justify-center p-4 bg-transparent">
         <div className="h-20 w-20 rounded-none border">
           <img src={subscription.image} />
         </div>

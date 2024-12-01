@@ -82,7 +82,7 @@ const SubscriptionsPerCategoryChart = () => {
         )}
 
         <div className="flex flex-col md:flex-row gap-1.5 w-full">
-          <TooltipDemo label="" payload={tooTipData && tooTipData} />
+          <TooltipDemo label="" className="bg-transparent" payload={tooTipData && tooTipData} />
 
           {chartData.length > 0 && (
             <ChartContainer

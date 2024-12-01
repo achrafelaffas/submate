@@ -316,6 +316,44 @@ export interface SubscriptionsPerCategory {
 /**
  * 
  * @export
+ * @interface TotalExpenses
+ */
+export interface TotalExpenses {
+    /**
+     * 
+     * @type {number}
+     * @memberof TotalExpenses
+     */
+    'total'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof TotalExpenses
+     */
+    'lastWeekTotal'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface UpcomingThisWeek
+ */
+export interface UpcomingThisWeek {
+    /**
+     * 
+     * @type {number}
+     * @memberof UpcomingThisWeek
+     */
+    'count'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof UpcomingThisWeek
+     */
+    'total'?: number;
+}
+/**
+ * 
+ * @export
  * @interface UserResponse
  */
 export interface UserResponse {
@@ -958,6 +996,39 @@ export const StatisticsApiAxiosParamCreator = function (configuration?: Configur
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        getDueThisWeek: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/statistics/get-due-this-week`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication BearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         getExpensesPerCategoryCount: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/statistics/expenses-per-category`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -1133,6 +1204,17 @@ export const StatisticsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        async getDueThisWeek(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UpcomingThisWeek>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDueThisWeek(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['StatisticsApi.getDueThisWeek']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         async getExpensesPerCategoryCount(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ExpensePerCategory>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getExpensesPerCategoryCount(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
@@ -1144,7 +1226,7 @@ export const StatisticsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPaymentsTotal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<number>> {
+        async getPaymentsTotal(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TotalExpenses>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getPaymentsTotal(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['StatisticsApi.getPaymentsTotal']?.[localVarOperationServerIndex]?.url;
@@ -1198,6 +1280,14 @@ export const StatisticsApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        getDueThisWeek(options?: RawAxiosRequestConfig): AxiosPromise<UpcomingThisWeek> {
+            return localVarFp.getDueThisWeek(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         getExpensesPerCategoryCount(options?: RawAxiosRequestConfig): AxiosPromise<Array<ExpensePerCategory>> {
             return localVarFp.getExpensesPerCategoryCount(options).then((request) => request(axios, basePath));
         },
@@ -1206,7 +1296,7 @@ export const StatisticsApiFactory = function (configuration?: Configuration, bas
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPaymentsTotal(options?: RawAxiosRequestConfig): AxiosPromise<number> {
+        getPaymentsTotal(options?: RawAxiosRequestConfig): AxiosPromise<TotalExpenses> {
             return localVarFp.getPaymentsTotal(options).then((request) => request(axios, basePath));
         },
         /**
@@ -1243,6 +1333,16 @@ export const StatisticsApiFactory = function (configuration?: Configuration, bas
  * @extends {BaseAPI}
  */
 export class StatisticsApi extends BaseAPI {
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof StatisticsApi
+     */
+    public getDueThisWeek(options?: RawAxiosRequestConfig) {
+        return StatisticsApiFp(this.configuration).getDueThisWeek(options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @param {*} [options] Override http request option.
