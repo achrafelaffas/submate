@@ -11,6 +11,7 @@ import submate.subscription.Subscription;
 import submate.subscription.SubscriptionRepository;
 import submate.user.User;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -48,8 +49,26 @@ public class StatisticsService {
         return new SubscriptionStats(count, lastweekCount);
     }
 
-    public double getPaymentsTotal(Authentication auth) {
+    public TotalExpenses getPaymentsTotal(Authentication auth) {
         User user = (User) auth.getPrincipal();
-        return paymentRepository.sumPriceBySubscriptionUserId(user.getId());
+        Double total = paymentRepository.sumPriceBySubscriptionUserId(user.getId());
+        LocalDateTime start = LocalDateTime.now().minusDays(7);
+        Double lastWeekTotal = paymentRepository.sumLastWeekPriceBySubscriptionUserId(user.getId(), start);
+
+        total = total != null ? total : 0.0;
+        lastWeekTotal = lastWeekTotal != null ? lastWeekTotal : 0.0;
+
+        return new TotalExpenses(total, lastWeekTotal);
+    }
+
+    public UpcomingThisWeek getUpcomingWeekPayment(Authentication auth) {
+        User user = (User) auth.getPrincipal();
+        Long count = subscriptionRepository.countSubscriptionsDueThisWeek(LocalDate.now(), user.getId());
+        count = count != null ? count : 0;
+
+        Double total = subscriptionRepository.sumSubscriptionsDueThisWeek(LocalDate.now(), user.getId());
+        total = total != null ? total : 0.0;
+
+        return new UpcomingThisWeek(count, total);
     }
 }

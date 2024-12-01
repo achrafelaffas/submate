@@ -23,7 +23,9 @@ public interface SubscriptionRepository extends JpaRepository<Subscription, Long
             "GROUP BY c.name")
     List<SubscriptionsPerCategory> countSubscriptionByCategory(@Param("userId") Long userId);
 
-    List<Subscription> findAllByCategoryId(Long categoryId);
+    @Query("select count(s.id) from Subscription s, User u where s.dueDate between current_date and :date and u.id = :userId")
+    Long countSubscriptionsDueThisWeek(LocalDate date, Long userId);
 
-    List<Subscription> countSubscriptionByCreatedDateAfter(LocalDate lastweek);
+    @Query("select sum(s.price) from Subscription s, User u where s.dueDate between current_date and :date and u.id = :userId")
+    Double sumSubscriptionsDueThisWeek(LocalDate date, Long userId);
 }

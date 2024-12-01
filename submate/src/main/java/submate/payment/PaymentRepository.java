@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import submate.statistics.ExpensePerCategory;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface PaymentRepository extends JpaRepository<Payment, Long> {
@@ -20,5 +21,8 @@ public interface PaymentRepository extends JpaRepository<Payment, Long> {
     List<ExpensePerCategory> countExpenseByCategory(@Param("userId") Long userId);
 
     @Query("SELECT SUM(p.price) FROM Payment p WHERE p.subscription.user.id = :userId")
-    double sumPriceBySubscriptionUserId(@Param("userId") Long userId);
+    Double sumPriceBySubscriptionUserId(@Param("userId") Long userId);
+
+    @Query("SELECT SUM(p.price) FROM Payment p WHERE p.subscription.user.id = :userId and p.createdDate >= :start")
+    Double sumLastWeekPriceBySubscriptionUserId(@Param("userId") Long userId, LocalDateTime start);
 }

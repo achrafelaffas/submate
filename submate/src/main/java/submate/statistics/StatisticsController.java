@@ -33,13 +33,18 @@ public class StatisticsController {
         return ResponseEntity.ok(statisticsService.getExpensesPerCategoryCount(auth));
     }
 
-    @GetMapping("get-subscription-stats")
+    @GetMapping("/get-subscription-stats")
     public ResponseEntity<SubscriptionStats> getSubscriptionStats(Authentication auth) {
         return ResponseEntity.ok(statisticsService.getSubscriptionStats(auth));
     }
 
-    @GetMapping("get-payments-total")
-    public ResponseEntity<Double> getPaymentsTotal(Authentication auth) {
+    @GetMapping("/get-payments-total")
+    public ResponseEntity<TotalExpenses> getPaymentsTotal(Authentication auth) {
         return ResponseEntity.ok(statisticsService.getPaymentsTotal(auth));
+    }
+
+    @GetMapping("/get-due-this-week")
+    public ResponseEntity<UpcomingThisWeek> getDueThisWeek(Authentication auth) {
+        return ResponseEntity.ok(statisticsService.getUpcomingWeekPayment(auth));
     }
 }
