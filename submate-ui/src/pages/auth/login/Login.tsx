@@ -65,7 +65,7 @@ const Login = () => {
 
   return (
     <div className="flex h-screen items-center">
-      <Card className="mx-auto max-w-sm lg:w-1/4 w-full">
+      <Card className="mx-auto max-w-sm lg:w-1/4 w-full bg-transparent">
         <CardHeader>
           <CardTitle className="text-2xl">Login</CardTitle>
           <CardDescription>
@@ -133,6 +133,13 @@ const Login = () => {
             Don&apos;t have an account?{" "}
             <Link to="/register" className="underline">
               Sign up
+            </Link>
+          </div>
+
+          <div className="mt-4 text-center text-sm">
+            forgot password?{" "}
+            <Link to="/forgot-password" className="underline">
+              Reset password
             </Link>
           </div>
         </CardContent>

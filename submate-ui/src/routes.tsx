@@ -10,12 +10,16 @@ import SubscriptionDetails from "./pages/Dashboard/Subscriptions/SubscriptionDet
 import NewSubscription from "./pages/Dashboard/Subscriptions/NewSubscription";
 import Profile from "./pages/Dashboard/Profile/Profile";
 import Landing from "./pages/Landing";
+import ForgotPassword from "./pages/auth/reset/ForgotPassword";
+import ResetPassword from "./pages/auth/reset/ResetPassword";
 
 const router = createBrowserRouter([
   { path: "/", element: <Landing /> },
   { path: "/register", element: <Register /> },
   { path: "/activate", element: <Activate /> },
   { path: "/login", element: <Login /> },
+  { path: "/forgot-password", element: <ForgotPassword /> },
+  { path: "/reset-password", element: <ResetPassword /> },
   {
     path: "/me",
     element: (
