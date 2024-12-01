@@ -49,6 +49,7 @@ public class EmailService {
         mailSender.send(mimeMessage);
     }
 
+    @Async
     public void SendRemindingEmail(
             String to,
             String username,
@@ -73,6 +74,37 @@ public class EmailService {
         );
 
         helper.setText(htmlContent, true);
+        mailSender.send(mimeMessage);
+    }
+
+
+    @Async
+    public void sendResetPasswordEmail(
+            String to,
+            String username,
+            String confirmationCode,
+            String subject
+    ) throws MessagingException {
+
+        MimeMessage mimeMessage = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(
+                mimeMessage,
+                MULTIPART_MODE_MIXED,
+                UTF_8.name()
+        );
+
+        String htmlContent = String.format(
+                "<html><body><p>Hi, %s!</p><p>Reset your submate password</p><p>Your reset code is: <strong>%s</strong></p></body></html>",
+                username, confirmationCode
+        );
+
+
+        helper.setFrom("achrafelaffas@gmail.com");
+        helper.setTo(to);
+        helper.setSubject(subject);
+
+        helper.setText(htmlContent, true);
+
         mailSender.send(mimeMessage);
     }
 }

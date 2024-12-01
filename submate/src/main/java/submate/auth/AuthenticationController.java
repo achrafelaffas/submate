@@ -3,6 +3,7 @@ package submate.auth;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,5 +35,17 @@ public class AuthenticationController {
             @Valid @RequestBody AuthenticationRequest request
     ) {
         return ResponseEntity.ok(service.authenticate(request));
+    }
+
+    @PostMapping("/request-rest-password")
+    public ResponseEntity<Void> requestRestPassword(@RequestParam @Email String email) throws MessagingException {
+        service.requestResetPassword(email);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/update-password")
+    public ResponseEntity<Void> resetPassword(@RequestBody ResetPasswordRequest request) {
+        service.resetPassword(request);
+        return ResponseEntity.ok().build();
     }
 }

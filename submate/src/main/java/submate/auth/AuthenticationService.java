@@ -58,7 +58,7 @@ public class AuthenticationService {
         var newToken = generateActivationToken(user);
         emailService.sendActivationEmail(
                 user.getEmail(),
-                user.getFullName(),
+                user.getFirstname(),
                 newToken,
                 "Activate your account"
         );
@@ -121,4 +121,30 @@ public class AuthenticationService {
                 .id(user.getId())
                 .token(jwtToken).build();
     }
+
+    public void requestResetPassword(String email) throws MessagingException {
+        User user = userRepository.findByEmail(email).orElseThrow();
+        var newToken = generateActivationToken(user);
+        emailService.sendResetPasswordEmail(
+                user.getEmail(),
+                user.getFirstname(),
+                newToken,
+                "Reset the password of your Submate account"
+        );
+    }
+
+    public void resetPassword(ResetPasswordRequest request) {
+        var savedToken = tokenRepository.findByToken(request.token())
+                .orElseThrow(() -> new EntityNotFoundException("Token not found"));
+
+        if (LocalDateTime.now().isAfter(savedToken.getExpires())) {
+            throw new RuntimeException("Token is expired");
+        }
+
+        User user = savedToken.getUser();
+        user.setPassword(encoder.encode(request.password()));
+        userRepository.save(user);
+    }
+
+
 }
