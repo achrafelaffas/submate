@@ -24,11 +24,11 @@ const UpComingThisWeek = ({ className }: { className?: string }) => {
       <h1 className="text-lg">Upcoming This Week</h1>
       <div className="flex flex-row justify-between items-center">
         <h1 className="text-primary text-3xl">
-          <span className="text-xs">Amount</span> $12{upcoming?.total}
+          <span className="text-xs">Amount</span> ${upcoming?.total}
         </h1>
         <h1 className="flex flex-row justify-between items-center gap-2">
           <span className="text-primary text-3xl">
-            <span className="text-xs">Count</span> 1{upcoming?.count}
+            <span className="text-xs">Count</span> {upcoming?.count}
           </span>
         </h1>
       </div>
