@@ -13,7 +13,7 @@ const useApi = () => {
   const authHeader = useAuthHeader();
   const config = useMemo(() => {
     const configuration = new Configuration();
-    configuration.basePath = "https://submate-production.up.railway.app/api/v1";
+    // configuration.basePath = "https://submate-production.up.railway.app/api/v1";
     if (authHeader)
       configuration.accessToken = authHeader.replace("Bearer ", "");
     return configuration;

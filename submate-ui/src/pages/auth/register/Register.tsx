@@ -55,7 +55,7 @@ const Register = () => {
 
   return (
     <div className="flex h-screen items-center">
-      <Card className="mx-auto max-w-sm">
+      <Card className="mx-auto max-w-sm bg-transparent">
         <CardHeader>
           <CardTitle className="text-xl">Sign Up</CardTitle>
           <CardDescription>

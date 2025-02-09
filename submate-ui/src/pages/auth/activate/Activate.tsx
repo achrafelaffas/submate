@@ -55,7 +55,7 @@ const Activate = () => {
 
   return (
     <div className="h-screen flex items-center justify-center">
-      <Card className="w-full max-w-sm px-4">
+      <Card className="w-full max-w-sm px-4 bg-transparent">
         <CardHeader>
           <CardTitle className="text-2xl">Activate Your Account</CardTitle>
           <CardDescription>

@@ -31,11 +31,13 @@ const RecentPayments = () => {
     fecthRecentPayments();
   }, []);
 
+  if (payments.length < 1) return null;
+
   return (
     <Card className="border p-1 min-h-[14vh]">
       <CardHeader className="flex flex-row justify-between text-sm">
         <div className="flex items-center gap-2 font-medium text-base md:text-xl">
-          Subscriptions per category
+          Recent Payments
         </div>
         <Link to="/me/subscriptions">
           <Button variant="ghost" className="text-primary">
@@ -44,21 +46,11 @@ const RecentPayments = () => {
         </Link>
       </CardHeader>
       <CardContent>
-        {payments.length < 1 && (
-          <div className="flex flex-col items-center justify-center w-full h-full gap-5">
-            <p>There's no data to show yet</p>
-            <Link to="/me/subscriptions/new">
-              <Button>Get Started</Button>
-            </Link>
-          </div>
-        )}
-        {payments.length > 0 && (
-          <MinimalDataTable
-            columns={columns}
-            data={payments}
-            isloading={isloading}
-          />
-        )}
+        <MinimalDataTable
+          columns={columns}
+          data={payments}
+          isloading={isloading}
+        />
       </CardContent>
     </Card>
   );

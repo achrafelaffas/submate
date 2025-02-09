@@ -4,7 +4,7 @@ import {
   CategoryDTO,
 } from "@/api";
 
-import Autocomplete, { TAutocomplete } from "@/components/Autocomplete";
+import BrandAutocomplete, { Brand } from "@/components/BrandAutocomplete";
 import DatePicker from "@/components/DatePicker";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -32,6 +32,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 const NewSubscription = () => {
+  const clientId = "1iddgnnxg141uPYC3NF";
   const api = useApi();
   const [categories, setCategories] = useState<CategoryDTO[]>([]);
   const navigate = useNavigate();
@@ -46,12 +47,15 @@ const NewSubscription = () => {
     },
   });
 
-  const handleClick = ({ query }: TAutocomplete) => {
-    form.setValue("plateform", query?.name!);
-    form.setValue("image", query?.icon!);
+  const handleClick = (brand: Brand) => {
+    form.setValue("plateform", brand.name);
+    form.setValue("image", brand.icon || "none");
   };
 
   const submit = async (request: SubscriptionRequest) => {
+    const url = request.image.replace(/(\?c=)[^&]+/, `$1${clientId}`);
+    request.image = url;
+    console.log(request.image);
     await api.subscriptionApi.createSubscription(request).then(
       () => navigate("/me/subscriptions", { replace: true }),
       (e) => console.log(e)
@@ -70,12 +74,9 @@ const NewSubscription = () => {
   }, []);
 
   return (
-    <Card className="p-10 flex flex-col gap-5 bg-transparent">
+    <Card className="lg:w-1/2 md:w-2/3 flex flex-col gap-5 bg-transparent mx-auto">
       <div>
-        <Autocomplete
-          onSubmit={handleClick}
-          placeholder="Search for a plateform..."
-        />
+        <BrandAutocomplete onSelect={handleClick} />
         {form.formState.errors.plateform?.message && (
           <p className="text-sm mt-2 font-medium text-red-500">
             {form.formState.errors.plateform.message}
